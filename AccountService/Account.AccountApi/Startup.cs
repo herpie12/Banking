@@ -36,8 +36,6 @@ namespace AccountApi
             services.AddDbContext<BankAccountDbContext>(opt =>
                opt.UseInMemoryDatabase("BankAccount"));
 
-       
-
             services.AddControllers();
 
             services.AddSwaggerGen(c =>

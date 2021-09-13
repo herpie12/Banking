@@ -6,7 +6,6 @@ using Account.Core.Services;
 using Account.Domain.Interfaces;
 using Account.Infrastructure.Repository;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Collections.Generic;
 using MediatR;
 
