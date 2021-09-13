@@ -2,13 +2,13 @@
 
 namespace Account.Domain.Models
 {
-   public class Account
+   public class BankAccount
     {
         public int Id { get; set; }
 
         public int AccountNo { get; set; }
 
-        public string Type { get; set; }
+        public string AccountType { get; set; }
 
         public string Status { get; set; }
 

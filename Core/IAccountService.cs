@@ -9,6 +9,6 @@ namespace Account.Core
 {
    public interface IAccountService
     {
-        Task<IEnumerable<AccountModel>> GetAccounts();
+        Task<IEnumerable<AccountDto>> GetAccounts();
     }
 }

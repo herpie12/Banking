@@ -4,5 +4,5 @@ using System.Collections.Generic;
 
 namespace Account.Core.Queries
 {
-   public record GetAccountListQuery() : IRequest<List<AccountModel>>;
+   public record GetAccountListQuery() : IRequest<IEnumerable<AccountDto>>;
 }

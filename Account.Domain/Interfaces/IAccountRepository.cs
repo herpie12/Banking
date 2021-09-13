@@ -1,14 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using Account.Domain.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Account.Domain.Interfaces
 {
    public interface IAccountRepository
     {
-        IEnumerable<Models.Account> GetAccounts();
+        Task<IEnumerable<BankAccount>> GetAccounts();
 
-        Task<IEnumerable<Models.Account>> Delete();
+        Task<BankAccount> Delete(int Id);
 
-        Task<IEnumerable<Models.Account>> CreateAccount();
+        Task <bool> CreateAccount(BankAccount bankAccount);
     }
 }
