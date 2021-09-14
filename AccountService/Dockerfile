@@ -7,20 +7,20 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["AccountApi/AccountApi.csproj", "AccountApi/"]
+COPY ["Account.AccountApi/Account.AccountApi.csproj", "Account.AccountApi/"]
 COPY ["Account.Infrastructure.IoC/Account.Infrastructure.IoC.csproj", "Account.Infrastructure.IoC/"]
-COPY ["Core/Account.Core.csproj", "Core/"]
-COPY ["Infrastructure/Account.Infrastructure.csproj", "Infrastructure/"]
+COPY ["Account.Core/Account.Core.csproj", "Account.Core/"]
+COPY ["Account.Infrastructure/Account.Infrastructure.csproj", "Account.Infrastructure/"]
 COPY ["Account.Domain/Account.Domain.csproj", "Account.Domain/"]
-RUN dotnet restore "AccountApi/AccountApi.csproj"
+RUN dotnet restore "Account.AccountApi/Account.AccountApi.csproj"
 COPY . .
-WORKDIR "/src/AccountApi"
-RUN dotnet build "AccountApi.csproj" -c Release -o /app/build
+WORKDIR "/src/Account.AccountApi"
+RUN dotnet build "Account.AccountApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "AccountApi.csproj" -c Release -o /app/publish
+RUN dotnet publish "Account.AccountApi.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "AccountApi.dll"]
+ENTRYPOINT ["dotnet", "Account.AccountApi.dll"]

@@ -36,6 +36,11 @@ namespace AccountApi
             services.AddDbContext<BankAccountDbContext>(opt =>
                opt.UseInMemoryDatabase("BankAccount"));
 
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = "localhost:6379";
+            });
+
             services.AddControllers();
 
             services.AddSwaggerGen(c =>

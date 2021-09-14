@@ -19,6 +19,7 @@ namespace Account.Core.Services
         public async Task<IEnumerable<AccountDto>> GetAccounts()
         {
            var bankAccountList = await _accountRepository.GetAccounts();
+           //TODO use automapper
            var accountModelList= bankAccountList.Select(z => new AccountDto { AccountNo = z.AccountNo, Status = z.Status, AccountType = z.AccountType, Balance = 1000.1m });
 
             return accountModelList;
