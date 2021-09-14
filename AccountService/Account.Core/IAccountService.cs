@@ -10,5 +10,7 @@ namespace Account.Core
    public interface IAccountService
     {
         Task<IEnumerable<AccountDto>> GetAccounts();
+
+        Task<int> CreateAccount(AccountDto accountDto);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Account.AccountApi.ResponseModels;
+using Account.Core.Commands;
 using Account.Core.Models;
 using Account.Core.Queries;
 using MediatR;
@@ -34,6 +35,12 @@ namespace AccountApi.Controllers
         public async Task<IEnumerable<AccountDto>> Get()
         {
             return await _mediator.Send(new GetAccountListQuery());
+        }
+
+        [HttpPost]
+        public async Task<int> CreateAccount([FromBody] AccountDto accountDto)
+        {
+            return await _mediator.Send(new CreateAccountCommand(accountDto));
         }
 
         [HttpGet("redis")]

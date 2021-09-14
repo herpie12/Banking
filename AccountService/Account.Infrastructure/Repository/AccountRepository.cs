@@ -17,9 +17,12 @@ namespace Account.Infrastructure.Repository
             _accountDbContext = accountDbContext;
         }
 
-        public Task<bool> CreateAccount(BankAccount bankAccount)
+        public Task<int> CreateAccount(BankAccount bankAccount)
         {
-            throw new NotImplementedException();
+            _accountDbContext.Accounts.Add(new BankAccount(bankAccount.AccountNo, bankAccount.AccountType,
+                bankAccount.Status, bankAccount.Balance, bankAccount.Created));
+
+            return Task.FromResult(_accountDbContext.SaveChanges());
         }
 
         public Task<BankAccount> Delete(int Id)
@@ -29,10 +32,6 @@ namespace Account.Infrastructure.Repository
 
         public async Task<IEnumerable<BankAccount>> GetAccounts()
         {
-            //Testing endpoint HttpGet, test object creation
-            _accountDbContext.Accounts.Add(new BankAccount { AccountNo = 132456, Created = DateTime.Now, AccountType = "Shared", Status = "Personal Account" });
-            _accountDbContext.SaveChanges();
-
             return await _accountDbContext.Accounts.ToListAsync();
         }
     }

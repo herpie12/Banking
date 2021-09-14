@@ -10,6 +10,6 @@ namespace Account.Domain.Interfaces
 
         Task<BankAccount> Delete(int Id);
 
-        Task <bool> CreateAccount(BankAccount bankAccount);
+        Task <int> CreateAccount(BankAccount bankAccount);
     }
 }
