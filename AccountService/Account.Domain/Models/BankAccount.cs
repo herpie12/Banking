@@ -12,6 +12,8 @@ namespace Account.Domain.Models
 
         public string Status { get; set; }
 
+        public decimal Balance { get; set; }
+
         public DateTime Created { get; set; }
 
     }

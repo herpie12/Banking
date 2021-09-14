@@ -19,7 +19,7 @@ namespace Account.Core.Services
         public async Task<IEnumerable<AccountDto>> GetAccounts()
         {
            var bankAccountList = await _accountRepository.GetAccounts();
-           var accountModelList= bankAccountList.Select(z => new AccountDto { AccountNo = z.AccountNo, Status = z.Status, Type = z.AccountType });
+           var accountModelList= bankAccountList.Select(z => new AccountDto { AccountNo = z.AccountNo, Status = z.Status, AccountType = z.AccountType, Balance = 1000.1m });
 
             return accountModelList;
         }
