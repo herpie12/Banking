@@ -5,10 +5,10 @@ namespace Account.Core.Commands
 {
     public class CreateAccountCommand : IRequest<int>
     {
-        public AccountDto _accountDto;
+        public AccountDto AccountDto;
         public CreateAccountCommand(AccountDto accountDto)
         {
-            _accountDto = accountDto;
+            AccountDto = accountDto;
         }
     }
 }

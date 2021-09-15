@@ -2,7 +2,7 @@
 
 namespace Account.Domain.Models
 {
-   public class BankAccount
+    public class BankAccount
     {
 
         public int Id { get; private set; }
@@ -13,7 +13,7 @@ namespace Account.Domain.Models
 
         public AccountStatus Status { get; set; }
 
-        public decimal Balance { get; set; }
+        public decimal Balance { get; private set; }
 
         public DateTime Created { get; set; }
 
@@ -32,6 +32,18 @@ namespace Account.Domain.Models
                 return;
 
             Status = AccountStatus.Closed;
+        }
+
+        public decimal Withdraw(decimal amount)
+        {
+            if (amount > Balance)
+            {
+                throw new ArgumentException("Withdraw from Balance is not possible, balance is: " + Balance + "and withdraw amount is: " + amount);
+            }
+
+            var newBalance = Balance -= amount;
+
+            return newBalance;
         }
     }
 }

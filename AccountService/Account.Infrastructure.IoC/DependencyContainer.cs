@@ -4,8 +4,6 @@ using Account.Core.Queries;
 using Account.Core.QueryHandlers;
 using Account.Core.CommandHandlers;
 using Account.Core.Services;
-using Account.Domain.Interfaces;
-using Account.Infrastructure.Repository;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using MediatR;
@@ -18,23 +16,18 @@ namespace Account.Infrastructure.IoC
         public static void RegisterServices(IServiceCollection service)
         {
             //Core layer
-
             service.AddScoped<IAccountService, AccountService>();
 
-            //Data layer
-
-            service.AddScoped<IAccountRepository, AccountRepository>();
-
             //Query handlers
-
             service.AddTransient<GetAccountListHandler>();
             service.AddTransient<IRequestHandler<GetAccountListQuery, IEnumerable<AccountDto>>, GetAccountListHandler>();
 
             //Command handlers
-
             service.AddTransient<CreateAccountHandler>();
             service.AddTransient<IRequestHandler<CreateAccountCommand, int>, CreateAccountHandler>();
 
+            service.AddTransient<WithdrawHandler>();
+            service.AddTransient<IRequestHandler<WithdrawCommand, decimal>, WithdrawHandler>();
         }
     }
 }

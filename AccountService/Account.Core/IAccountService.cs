@@ -1,8 +1,5 @@
 ﻿using Account.Core.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Account.Core
@@ -12,5 +9,7 @@ namespace Account.Core
         Task<IEnumerable<AccountDto>> GetAccounts();
 
         Task<int> CreateAccount(AccountDto accountDto);
+
+        Task<decimal> Withdraw(decimal amount, int accountId);
     }
 }

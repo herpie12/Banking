@@ -1,6 +1,5 @@
 ﻿using Account.Core.Commands;
 using MediatR;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,7 +16,7 @@ namespace Account.Core.CommandHandlers
 
         public async Task<int> Handle(CreateAccountCommand request, CancellationToken cancellationToken)
         {
-            var accountSaved = await _accountService.CreateAccount(request._accountDto);
+            var accountSaved = await _accountService.CreateAccount(request.AccountDto);
 
             return accountSaved;
         }

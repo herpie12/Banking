@@ -1,4 +1,5 @@
-﻿using Account.AccountApi.ResponseModels;
+﻿using Account.AccountApi.RequestModels;
+using Account.AccountApi.ResponseModels;
 using Account.Core.Commands;
 using Account.Core.Models;
 using Account.Core.Queries;
@@ -43,6 +44,12 @@ namespace AccountApi.Controllers
             return await _mediator.Send(new CreateAccountCommand(accountDto));
         }
 
+        [HttpPut("withdraw")]
+        public async Task<decimal> Withdraw([FromBody] AccountWithdraw accountWithdraw)
+        {
+            return await _mediator.Send(new WithdrawCommand(accountWithdraw.Amount, accountWithdraw.AccountId));
+        }
+
         [HttpGet("redis")]
         public async Task<IActionResult> GetAccountsUsingRedisCache()
         {
@@ -60,7 +67,7 @@ namespace AccountApi.Controllers
             {
                 var accountDtos = await _mediator.Send(new GetAccountListQuery());
                 //TODO use automapper
-                accountList = accountDtos.Select(z => new AccountReponse { AccountNo = z.AccountNo, AccountType = z.AccountType, Balance = z.Balance, Status = z.Status }).ToList();
+                accountList = accountDtos.Select(z => new AccountReponse { AccountNo = z.AccountNo, AccountType = z.AccountType, Balance = z.Balance, Status = z.Status.ToString() }).ToList();
 
                 serializedAccounts = JsonConvert.SerializeObject(accountList);
                 redisAccounts = Encoding.UTF8.GetBytes(serializedAccounts);
