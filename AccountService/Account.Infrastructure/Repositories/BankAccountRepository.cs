@@ -1,40 +1,38 @@
-﻿using Account.Core.Models;
+﻿using Account.Domain.Interfaces;
 using Account.Domain.Models;
 using Account.Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using System.Threading.Tasks;
 
-namespace Account.Core.Services
+namespace Account.Infrastructure.Repositories
 {
-    public class AccountService : IAccountService
+    public class BankAccountRepository : IBankAccountRepository
     {
         private readonly BankAccountDbContext _bankAccountDbContext;
 
-        public AccountService(BankAccountDbContext bankAccountDbContext)
+        public BankAccountRepository(BankAccountDbContext bankAccountDbContext)
         {
             _bankAccountDbContext = bankAccountDbContext;
         }
-
-        public async Task<int> CreateAccount(AccountDto bankAccount)
+        public async Task<int> CreateAccount(BankAccount bankAccount)
         {
-            _bankAccountDbContext.Accounts.Add(new BankAccount(bankAccount.AccountNo, bankAccount.AccountType,
-            bankAccount.Status, bankAccount.Balance, DateTime.Now));
+            _bankAccountDbContext.Accounts.Add(bankAccount);
 
             return await _bankAccountDbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<AccountDto>> GetAccounts()
+        public async Task<IEnumerable<BankAccount>> GetAccounts()
         {
             var bankAccounts = await _bankAccountDbContext.Accounts.ToListAsync();
 
-            //TODO use automapper
-            var accountModelList = bankAccounts.Select(z => new AccountDto { AccountNo = z.AccountNo, Status = z.Status, AccountType = z.AccountType, Balance = z.Balance });
+            return bankAccounts;
+        }
 
-            return accountModelList;
+        public async Task<int> Save()
+        {
+           return await _bankAccountDbContext.SaveChangesAsync();
         }
 
         public async Task<decimal> Withdraw(decimal amount, int accountId)
@@ -48,11 +46,6 @@ namespace Account.Core.Services
             await _bankAccountDbContext.SaveChangesAsync();
 
             return newBalance;
-        }
-
-        public static AccountStatus ParseEnum(string value)
-        {
-            return (AccountStatus)Enum.Parse(typeof(AccountStatus), value, true);
         }
     }
 }

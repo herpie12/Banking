@@ -1,6 +1,6 @@
 ﻿using Account.Domain.Models;
 
-namespace Account.Core.Models
+namespace Account.Services.DtoModels
 {
     public sealed class AccountDto
     {

@@ -1,9 +1,10 @@
 ﻿using Account.AccountApi.RequestModels;
 using Account.AccountApi.ResponseModels;
-using Account.Core.Commands;
-using Account.Core.Models;
-using Account.Core.Queries;
+using Account.Services.Commands;
+using Account.Services.DtoModels;
+using Account.Services.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
@@ -17,6 +18,9 @@ using System.Threading.Tasks;
 namespace AccountApi.Controllers
 {
     [ApiController]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [Route("[controller]")]
     public class AccountController : ControllerBase
     {

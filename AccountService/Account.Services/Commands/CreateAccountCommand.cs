@@ -1,7 +1,7 @@
-﻿using Account.Core.Models;
+﻿using Account.Services.DtoModels;
 using MediatR;
 
-namespace Account.Core.Commands
+namespace Account.Services.Commands
 {
     public class CreateAccountCommand : IRequest<int>
     {

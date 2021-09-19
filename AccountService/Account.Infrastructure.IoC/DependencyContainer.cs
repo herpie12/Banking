@@ -1,13 +1,14 @@
-﻿using Account.Core;
-using Account.Core.Models;
-using Account.Core.Queries;
-using Account.Core.QueryHandlers;
-using Account.Core.CommandHandlers;
-using Account.Core.Services;
+﻿
+using Account.Domain.Interfaces;
+using Account.Infrastructure.Repositories;
+using Account.Services.CommandHandlers;
+using Account.Services.Commands;
+using Account.Services.DtoModels;
+using Account.Services.Queries;
+using Account.Services.QueryHandlers;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
-using MediatR;
-using Account.Core.Commands;
 
 namespace Account.Infrastructure.IoC
 {
@@ -16,7 +17,7 @@ namespace Account.Infrastructure.IoC
         public static void RegisterServices(IServiceCollection service)
         {
             //Core layer
-            service.AddScoped<IAccountService, AccountService>();
+            service.AddScoped<IBankAccountRepository, BankAccountRepository>();
 
             //Query handlers
             service.AddTransient<GetAccountListHandler>();
