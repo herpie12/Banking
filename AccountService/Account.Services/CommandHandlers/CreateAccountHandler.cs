@@ -5,6 +5,7 @@ using Account.Domain.Models;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using System;
 
 namespace Account.Services.CommandHandlers
 {
@@ -19,18 +20,12 @@ namespace Account.Services.CommandHandlers
 
         public async Task<int> Handle(CreateAccountCommand request, CancellationToken cancellationToken)
         {
-
             var accountSaved = await _bankAccountRepository.CreateAccount(Map(request.AccountDto));
 
             return accountSaved;
         }
         private BankAccount Map(AccountDto accountDto)
-           => new BankAccount
-           {
-               AccountNo = accountDto.AccountNo,
-               AccountType = accountDto.AccountType,
-               Balance = accountDto.Balance,
-               Status = accountDto.Status
-           };
+           => new BankAccount(accountDto.AccountNo, accountDto.AccountType, accountDto.Status, accountDto.Balance, DateTime.Now);
+
     }
 }
