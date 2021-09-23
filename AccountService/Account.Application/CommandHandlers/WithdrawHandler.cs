@@ -1,10 +1,10 @@
-﻿using Account.Services.Commands;
+﻿using Account.Application.Commands;
 using Account.Domain.Interfaces;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Account.Services.CommandHandlers
+namespace Account.Application.CommandHandlers
 {
     public class WithdrawHandler : IRequestHandler<WithdrawCommand, decimal>
     {

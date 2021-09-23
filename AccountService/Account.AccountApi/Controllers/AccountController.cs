@@ -1,8 +1,8 @@
 ﻿using Account.AccountApi.RequestModels;
 using Account.AccountApi.ResponseModels;
-using Account.Services.Commands;
-using Account.Services.DtoModels;
-using Account.Services.Queries;
+using Account.Application.Commands;
+using Account.Application.DtoModels;
+using Account.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

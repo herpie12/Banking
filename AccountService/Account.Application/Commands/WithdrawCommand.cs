@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Account.Services.Commands
+namespace Account.Application.Commands
 {
     public class WithdrawCommand : IRequest<decimal>
     {

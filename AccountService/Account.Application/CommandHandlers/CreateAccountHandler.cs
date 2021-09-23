@@ -1,5 +1,5 @@
-﻿using Account.Services.Commands;
-using Account.Services.DtoModels;
+﻿using Account.Application.Commands;
+using Account.Application.DtoModels;
 using Account.Domain.Interfaces;
 using Account.Domain.Models;
 using MediatR;
@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System;
 
-namespace Account.Services.CommandHandlers
+namespace Account.Application.CommandHandlers
 {
     public class CreateAccountHandler : IRequestHandler<CreateAccountCommand, int>
     {

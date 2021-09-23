@@ -1,5 +1,5 @@
-﻿using Account.Services.DtoModels;
-using Account.Services.Queries;
+﻿using Account.Application.DtoModels;
+using Account.Application.Queries;
 using Account.Domain.Interfaces;
 using Account.Domain.Models;
 using MediatR;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Account.Services.QueryHandlers
+namespace Account.Application.QueryHandlers
 {
     public class GetAccountListHandler : IRequestHandler<GetAccountListQuery, IEnumerable<AccountDto>>
     {

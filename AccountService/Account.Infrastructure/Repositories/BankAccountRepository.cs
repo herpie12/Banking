@@ -39,8 +39,7 @@ namespace Account.Infrastructure.Repositories
         {
             var bankAccount = _bankAccountDbContext.Accounts.Where(z => z.Id == accountId).First();
 
-            var newBalance = bankAccount.Withdraw(amount);
-
+            var newBalance = bankAccount.WithdrawAmount(amount);
             _bankAccountDbContext.Entry(bankAccount).State = EntityState.Modified;
 
             await _bankAccountDbContext.SaveChangesAsync();

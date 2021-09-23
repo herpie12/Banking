@@ -42,7 +42,7 @@ namespace Account.Domain.Models
             }
             Balance = balance;
         }
-        public decimal Withdraw(decimal amount)
+        public decimal WithdrawAmount(decimal amount)
         {
             if (amount > Balance)
             {
@@ -50,6 +50,18 @@ namespace Account.Domain.Models
             }
 
             var newBalance = Balance -= amount;
+
+            return newBalance;
+        }
+
+        public decimal InsertAmount(decimal amount)
+        {
+            if (amount == Balance)
+            {
+                throw new ArgumentException("Amount is zero: " + amount);
+            }
+
+            var newBalance = Balance += amount;
 
             return newBalance;
         }

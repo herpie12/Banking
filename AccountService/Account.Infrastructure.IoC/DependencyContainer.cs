@@ -1,11 +1,11 @@
 ﻿
 using Account.Domain.Interfaces;
 using Account.Infrastructure.Repositories;
-using Account.Services.CommandHandlers;
-using Account.Services.Commands;
-using Account.Services.DtoModels;
-using Account.Services.Queries;
-using Account.Services.QueryHandlers;
+using Account.Application.CommandHandlers;
+using Account.Application.Commands;
+using Account.Application.DtoModels;
+using Account.Application.Queries;
+using Account.Application.QueryHandlers;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;

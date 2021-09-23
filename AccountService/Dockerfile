@@ -9,7 +9,7 @@ FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY ["Account.AccountApi/Account.AccountApi.csproj", "Account.AccountApi/"]
 COPY ["Account.Infrastructure.IoC/Account.Infrastructure.IoC.csproj", "Account.Infrastructure.IoC/"]
-COPY ["Account.Services/Account.Services.csproj", "Account.Services/"]
+COPY ["Account.Application/Account.Application.csproj", "Account.Application/"]
 COPY ["Account.Infrastructure/Account.Infrastructure.csproj", "Account.Infrastructure/"]
 COPY ["Account.Domain/Account.Domain.csproj", "Account.Domain/"]
 RUN dotnet restore "Account.AccountApi/Account.AccountApi.csproj"
