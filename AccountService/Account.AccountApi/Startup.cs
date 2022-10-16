@@ -26,8 +26,10 @@ namespace AccountApi
         {
             services.AddTransient<BankAccountDbContext>();
 
+            var connectionString = Configuration.GetConnectionString("AccountDB");
+
             services.AddDbContext<BankAccountDbContext>(opt =>
-               opt.UseInMemoryDatabase("BankAccount"));
+               opt.UseSqlServer(connectionString));
 
             services.AddStackExchangeRedisCache(options =>
             {

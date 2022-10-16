@@ -4,6 +4,7 @@ using Account.Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Account.Infrastructure.Repositories
@@ -18,9 +19,28 @@ namespace Account.Infrastructure.Repositories
         }
         public async Task<int> CreateAccount(BankAccount bankAccount)
         {
-            _bankAccountDbContext.Accounts.Add(bankAccount);
+            using (var transaction = _bankAccountDbContext.Database.BeginTransaction())
+            {
+                try
+                {
+                    _bankAccountDbContext.Accounts.Add(bankAccount);
 
-            return await _bankAccountDbContext.SaveChangesAsync();
+                    _bankAccountDbContext.AccountOuterBoxMessages.Add(new AccountOuterBoxMessage
+                    { Id = new System.Guid(), OccurredOnUtc = System.DateTime.UtcNow, Content = JsonSerializer.Serialize<BankAccount>(bankAccount) });
+
+                    await _bankAccountDbContext.SaveChangesAsync();
+
+                    await transaction.CommitAsync();
+
+                    return 0;
+                }
+                catch (System.Exception)
+                {
+                    transaction.Rollback();
+
+                    throw;
+                }
+            }
         }
 
         public async Task<IEnumerable<BankAccount>> GetAccounts()
@@ -32,7 +52,7 @@ namespace Account.Infrastructure.Repositories
 
         public async Task<int> Save()
         {
-           return await _bankAccountDbContext.SaveChangesAsync();
+            return await _bankAccountDbContext.SaveChangesAsync();
         }
 
         public async Task<decimal> Withdraw(decimal amount, int accountId)
