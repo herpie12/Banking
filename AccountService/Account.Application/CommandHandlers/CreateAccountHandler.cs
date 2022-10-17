@@ -20,9 +20,7 @@ namespace Account.Application.CommandHandlers
 
         public async Task<int> Handle(CreateAccountCommand request, CancellationToken cancellationToken)
         {
-            var accountSaved = await _bankAccountRepository.CreateAccount(Map(request.AccountDto));
-
-            return accountSaved;
+            return await _bankAccountRepository.CreateAccount(Map(request.AccountDto));
         }
         private BankAccount Map(AccountDto accountDto)
            => new BankAccount(accountDto.AccountNo, accountDto.AccountType, accountDto.Status, accountDto.Balance, DateTime.Now);

@@ -24,15 +24,16 @@ namespace Account.Infrastructure.Repositories
                 try
                 {
                     _bankAccountDbContext.Accounts.Add(bankAccount);
+                    await _bankAccountDbContext.SaveChangesAsync();
 
-                    _bankAccountDbContext.AccountOuterBoxMessages.Add(new AccountOuterBoxMessage
+                    _bankAccountDbContext.AccountOuterBoxMessages.Add(new AccountOutBoxMessage
                     { Id = new System.Guid(), OccurredOnUtc = System.DateTime.UtcNow, Content = JsonSerializer.Serialize<BankAccount>(bankAccount) });
 
-                    await _bankAccountDbContext.SaveChangesAsync();
+                    _bankAccountDbContext.SaveChanges();
 
                     await transaction.CommitAsync();
 
-                    return 0;
+                    return 1;
                 }
                 catch (System.Exception)
                 {
