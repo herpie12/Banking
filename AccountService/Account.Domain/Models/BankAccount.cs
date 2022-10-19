@@ -28,7 +28,7 @@ namespace Account.Domain.Models
         public BankAccount(int accountNo, string accountType, AccountStatus status, decimal balance, DateTime created)
         {
             AccountNo = accountNo;
-            AccountType = accountType;
+            AccountType = accountType ?? "deposit";
             Status = status;
             Balance = balance;
             Created = created;

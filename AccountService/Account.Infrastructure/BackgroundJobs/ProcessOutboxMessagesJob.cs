@@ -1,5 +1,7 @@
 ﻿using Account.Domain.Models;
+using Account.Infrastructure.BackgroundJobs.Events;
 using Account.Infrastructure.Data.Context;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Quartz;
@@ -13,12 +15,14 @@ namespace Account.Infrastructure.BackgroundJobs
     public class ProcessOutboxMessagesJob : IJob
     {
         private readonly BankAccountDbContext _bankAccountDbContext;
+        private readonly IPublishEndpoint _publishEndpoint;
         //private readonly IPublisher _publisher;
 
-        public ProcessOutboxMessagesJob(BankAccountDbContext bankAccountDbContext )
+        public ProcessOutboxMessagesJob(BankAccountDbContext bankAccountDbContext, IPublishEndpoint publishEndpoint)
         {
             _bankAccountDbContext = bankAccountDbContext;
-            //_publisher = publisher; 
+
+            _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
         }
         public async Task Execute(IJobExecutionContext context)
         {
@@ -36,7 +40,12 @@ namespace Account.Infrastructure.BackgroundJobs
                     //logging
                 }
 
-                //_publisher.Publish(domainEvent);
+               await _publishEndpoint.Publish(new AccountEvent {
+                        AccountNo = domainEvent.AccountNo,
+                        AccountType = domainEvent.AccountType,
+                        Balance = domainEvent.Balance,
+                        AccountCreated = domainEvent.Created,
+                        Status = domainEvent.Status});
 
                 message.ProcessedOnUtc = DateTime.UtcNow;
 

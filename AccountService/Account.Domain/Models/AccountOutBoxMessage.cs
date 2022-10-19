@@ -2,7 +2,7 @@
 
 namespace Account.Domain.Models
 {
-    public class AccountOutBoxMessage
+    public class AccountOutBoxMessage 
     {
         public Guid Id { get; set; }     
         public string Content { get; set; } 

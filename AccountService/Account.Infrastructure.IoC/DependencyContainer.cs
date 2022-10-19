@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using Quartz;
 using Account.Infrastructure.BackgroundJobs;
+using MassTransit;
 
 namespace Account.Infrastructure.IoC
 {
@@ -56,8 +57,14 @@ namespace Account.Infrastructure.IoC
             //    // when shutting down we want jobs to complete gracefully
             //    options.WaitForJobsToComplete = true;
             //});
-
             service.AddQuartzHostedService();
+
+            // MassTransit-RabbitMQ Configuration
+            service.AddMassTransit(config => {
+                config.UsingRabbitMq((ctx, cfg) => {
+                    cfg.Host("amqp://guest:guest@localhost:5672");
+                });
+            });
         }
     }
 }
