@@ -26,31 +26,42 @@ namespace Account.Infrastructure.BackgroundJobs
         }
         public async Task Execute(IJobExecutionContext context)
         {
-            var messages = await _bankAccountDbContext.Set<AccountOutBoxMessage>()
-                            .Where(m => m.ProcessedOnUtc == null)
-                            .Take(20).ToListAsync();
-
-            foreach (var message in messages)
+            try
             {
-                var domainEvent = JsonConvert.DeserializeObject<BankAccount>(message.Content);
+                var messages = await _bankAccountDbContext.Set<AccountOutBoxMessage>()
+                           .Where(m => m.ProcessedOnUtc == null)
+                           .Take(20).ToListAsync();
 
-                if (domainEvent is null)
+                foreach (var message in messages)
                 {
-                    continue;
-                    //logging
-                }
+                    var domainEvent = JsonConvert.DeserializeObject<BankAccount>(message.Content);
 
-               await _publishEndpoint.Publish(new AccountEvent {
+                    if (domainEvent is null)
+                    {
+                        continue;
+                        //logging
+                    }
+
+                    await _publishEndpoint.Publish(new AccountEvent
+                    {
                         AccountNo = domainEvent.AccountNo,
                         AccountType = domainEvent.AccountType,
                         Balance = domainEvent.Balance,
                         AccountCreated = domainEvent.Created,
-                        Status = domainEvent.Status});
+                        Status = domainEvent.Status
+                    });
 
-                message.ProcessedOnUtc = DateTime.UtcNow;
+                    message.ProcessedOnUtc = DateTime.UtcNow;
 
-                await _bankAccountDbContext.SaveChangesAsync();
+                    await _bankAccountDbContext.SaveChangesAsync();
+                }
             }
+            catch (Exception)
+            {
+
+                throw;
+            }
+           
         }
     }
 }

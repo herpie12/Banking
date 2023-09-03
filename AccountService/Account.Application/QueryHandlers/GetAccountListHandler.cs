@@ -19,6 +19,8 @@ namespace Account.Application.QueryHandlers
         }
         public async Task<IEnumerable<AccountDto>> Handle(GetAccountListQuery request, CancellationToken cancellationToken)
         {
+            await Task.Delay(10_000, cancellationToken);
+
             var banckAccounts = await _bankAccountRepository.GetAccounts();
             return banckAccounts.Select(x => Map(x));
         }
